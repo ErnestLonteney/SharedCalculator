@@ -4,18 +4,18 @@ using System.Threading.Tasks;
 
 namespace SharedCalculator
 {
-    public class MainWindowViewModel : ViewModelBase 
+    public class MainWindowViewModel : ViewModelBase
     {
         public IAsyncCommand InputDigitCommand { get; }
-        public IAsyncCommand BackToZeroCommand { get; }   
+        public IAsyncCommand BackToZeroCommand { get; }
         public IAsyncCommand SignCommand { get; }
-        public IAsyncCommand ResultCommand { get; } 
+        public IAsyncCommand ResultCommand { get; }
         public IAsyncCommand BackspaceCommand { get; }
         public IAsyncCommand PercentCommand { get; }
         public IAsyncCommand PowCommand { get; }
         public AsyncCommand SqrtCommand { get; }
-        public AsyncCommand AddMinusCommand { get; }   
-        public AsyncCommand OneDivideCommand { get; }   
+        public AsyncCommand AddMinusCommand { get; }
+        public AsyncCommand OneDivideCommand { get; }
 
         double result = 0;
         string currentValue = "0";
@@ -35,16 +35,16 @@ namespace SharedCalculator
             SqrtCommand = new AsyncCommand(SqrtCommandExecute, UnaryCanExecute);
             AddMinusCommand = new AsyncCommand(AddMinusCommandExecute, UnaryCanExecute);
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
-        }      
+        }
 
         public string CurrentValue
         {
             get => currentValue;
-            set 
+            set
             {
                 if (value == "CE")
-                { 
-                    currentValue = "0"; 
+                {
+                    currentValue = "0";
                 }
                 else if (CurrentValue == "0" || newInput)
                 {
@@ -101,11 +101,11 @@ namespace SharedCalculator
                         result = 0; // TODO: Implement and call dividing method.
                                     // TODO: Check on zero - if divide by zero need message Divide by Zero!
                                     // CurrentValue = divide by zero need message Divide by Zero!
-                      //  return Task.CompletedTask;
+                                    //  return Task.CompletedTask;
                     }
                     break;
                 case '*':
-                    result = 0; // TODO: Implement and call multiply method
+                    result = Multiply(left, right); // TODO: Implement and call multiply method
                     break;
             }
 
@@ -133,7 +133,7 @@ namespace SharedCalculator
             RaisePropertyChanged(nameof(CurrentValue));
 
             return Task.CompletedTask;
-        }      
+        }
 
         Task PercentCommandExecute()
         {
@@ -148,10 +148,10 @@ namespace SharedCalculator
 
         Task PowCommandExecute()
         {
-           left = Convert.ToDouble(CurrentValue);  
-           result = 0; // TODO: Implement and call pow method
-           newInput = true;
-           CurrentValue = result.ToString();
+            left = Convert.ToDouble(CurrentValue);
+            result = 0; // TODO: Implement and call pow method
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
@@ -168,8 +168,8 @@ namespace SharedCalculator
 
         Task AddMinusCommandExecute()
         {
-            currentValue = (currentValue[0] == '-') ? 
-                  currentValue.Remove(0, 1) 
+            currentValue = (currentValue[0] == '-') ?
+                  currentValue.Remove(0, 1)
                 : currentValue.Insert(0, "-");
 
             RaisePropertyChanged(nameof(CurrentValue));
@@ -183,8 +183,8 @@ namespace SharedCalculator
             var res = 0; // TODO - Call divide method 1 / left.Value
             newInput = true;
             // TODO: Check on dividing method
-           //if true current CurrentValue = message 
-           // else CurrentValue = res.ToString
+            //if true current CurrentValue = message 
+            // else CurrentValue = res.ToString
 
             return Task.CompletedTask;
         }
@@ -195,6 +195,7 @@ namespace SharedCalculator
         #endregion
 
         #region Calculator methods
+        double Multiply(double? num1, double? num2) => (double) (num1 * num2); 
 
         #endregion
     }
