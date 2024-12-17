@@ -14,7 +14,7 @@ namespace SharedCalculator
         public IAsyncCommand PercentCommand { get; }
         public IAsyncCommand PowCommand { get; }
         public AsyncCommand SqrtCommand { get; }
-        public AsyncCommand AddMinusCommand2 { get; }   
+        public AsyncCommand AddMinusCommand { get; }   
         public AsyncCommand OneDivideCommand { get; }
 
         double result = 0;
