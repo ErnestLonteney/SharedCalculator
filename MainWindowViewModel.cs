@@ -88,7 +88,7 @@ namespace SharedCalculator
 
         Task ResultCommandExecute()
         {
-            right = Convert.ToDouble(CurrentValue);
+            right = 99; // Convert.ToDouble(CurrentValue);
             switch (sign)
             {
                 case '+':  // TODO Implement adding here
