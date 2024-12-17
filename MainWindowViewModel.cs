@@ -158,8 +158,7 @@ namespace SharedCalculator
 
         Task PowCommandExecute()
         {
-            result = 23 * 23;
-            result.ToString();
+
             CurrentValue = "result here";
 
             return Task.CompletedTask;
