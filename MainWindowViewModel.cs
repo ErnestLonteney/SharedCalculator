@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using System;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace SharedCalculator
@@ -86,7 +87,7 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
-        Task ResultCommandExecute()
+        public Task ResultCommandExecute()
         {
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
@@ -146,13 +147,61 @@ namespace SharedCalculator
         }
 
 
-        Task PercentCommandExecute()
+        public Task PercentCommandExecute()
         {
-            // TODO Implement getting percent
-            CurrentValue = "result here";
+            //приводим второй операнд к типу double
+            right = Convert.ToDouble(CurrentValue);
+            if (left != 0 && right != 0)
+            {
+                //сохраняем полученные проценты в переменную
+                var result = calculatePercents((double)left, (double)right);
 
-            RaisePropertiesChanged(nameof(CurrentValue));   
+                //сброс значения переменной CurrentValue, для последуюшего присвоения ей результата операции
+                newInput = true;
 
+                switch (sign)
+                {
+                    case '+':
+                        //явно приводим nullable-допустимый тип к double
+                        double add = ((double)left + result);
+
+                        //устанавливаем новое значение CurrentValue для отображения результата
+                        CurrentValue = add.ToString();
+                        break;
+
+                    case '-':
+                        double sub = ((double)left - result);
+                        CurrentValue = sub.ToString();
+                        break;
+
+                    case '*':
+                        CurrentValue = result.ToString();
+                        break;
+
+                    case '/':
+                        if (result != 0)
+                        {
+                            double div = ((double)left / result);
+                            CurrentValue = div.ToString();
+                            break;
+                        }
+                        else
+                        {
+                            CurrentValue = 0.ToString();
+                            break;
+                        }
+
+                }
+               
+            }
+            else
+            {
+                CurrentValue = 0.ToString();
+            }
+
+            RaisePropertiesChanged(nameof(CurrentValue));
+
+            newInput = true;
             return Task.CompletedTask;
         }
 
@@ -204,6 +253,9 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
+        double calculatePercents(double value, double percents) {
+            return value / 100 * percents;
+        }
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  

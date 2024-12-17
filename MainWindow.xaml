@@ -39,7 +39,7 @@
     <StackPanel Background="AliceBlue">
         <Label Name="resultPanel"  Content="{Binding Path=CurrentValue}" Margin="0,0,10,0" FontSize="50" HorizontalAlignment="Right" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command="{Binding PercentCommand}" Background="Transparent" FontSize="22" Content="%" />
+            <Button Command="{Binding PercentCommand}" Background="Transparent" FontSize="22" Content="%" Click="Button_Click"/>
             <Button Command="{Binding BackToZeroCommand}" Background="Transparent" FontSize="18" Content="CE"/>
             <Button Command="{Binding BackToZeroCommand}" Background="Transparent" FontSize="18" Content="C"/>
             <Button Command="{Binding BackspaceCommand}" Background="Transparent" FontSize="16" Content="Backspace"/>

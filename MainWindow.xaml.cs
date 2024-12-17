@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DevExpress.Mvvm.Native;
+using DevExpress.Mvvm.POCO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +25,18 @@ namespace SharedCalculator
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();    
-        }        
+            DataContext = new MainWindowViewModel();
+            
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+                
+                await viewModel.PercentCommandExecute();
+            }
+
+        }
     }
 }
