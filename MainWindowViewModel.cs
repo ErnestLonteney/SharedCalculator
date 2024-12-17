@@ -158,7 +158,7 @@ namespace SharedCalculator
 
         Task PowCommandExecute()
         {
-            // TODO Implement pow operation 
+
             CurrentValue = "result here";
 
             return Task.CompletedTask;
