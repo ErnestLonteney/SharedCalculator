@@ -100,17 +100,16 @@ namespace SharedCalculator
                     break;
                 case '/':
                     {
-                        // TODO Implement dividing 
-                        bool divedeByZero = false;
-
-                        if (divedeByZero)
+                        if (right == 0)
                         {
                             newInput = true;
                             CurrentValue = "Divide by zero!";
-                            return Task.CompletedTask; ;
+                            return Task.CompletedTask;
                         }
                         else
-                            result = 0;
+                        {
+                            result = Convert.ToDouble(left/right);
+                        }
                     }
                     break;
                 case '*':
