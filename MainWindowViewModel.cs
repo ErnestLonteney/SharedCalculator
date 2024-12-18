@@ -15,7 +15,7 @@ namespace SharedCalculator
         public IAsyncCommand PowCommand { get; }
         public AsyncCommand SqrtCommand { get; }
         public AsyncCommand AddMinusCommand { get; }   
-        public AsyncCommand OneDivideCommand { get; }   
+        public AsyncCommand OneDivideCommand { get; }
 
         double result = 0;
         string currentValue = "0";
@@ -91,26 +91,31 @@ namespace SharedCalculator
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
-                case '+': result = CalculatorService.Add(left.Value, right.Value);
+                case '+':  // TODO Implement adding here
+                    result = 0;
                     break;
                 case '-':
-                    result = CalculatorService.Subtraction(left.Value, right.Value);
+                    // TODO Implement substraction here                  
+                      result = 0;
                     break;
                 case '/':
                     {
-                        var res = CalculatorService.Divide(left.Value, right.Value, out bool divedeOnZero);
-                        if (divedeOnZero)
+                        // TODO Implement dividing 
+                        bool divedeByZero = false;
+
+                        if (divedeByZero)
                         {
                             newInput = true;
                             CurrentValue = "Divide by zero!";
                             return Task.CompletedTask; ;
                         }
                         else
-                            result = res;
+                            result = 0;
                     }
                     break;
                 case '*':
-                    result = CalculatorService.Multiply(left.Value, right.Value);
+                    // TODO Implement mulitiply 
+                    result = 0;
                     break;
             }
 
@@ -143,10 +148,9 @@ namespace SharedCalculator
 
         Task PercentCommandExecute()
         {
-            right = Convert.ToDouble(CurrentValue);
-            right = CalculatorService.GetPercent(left.Value, right.Value);
-            currentValue = right.Value.ToString();
-            
+            // TODO Implement getting percent
+            CurrentValue = "result here";
+
             RaisePropertiesChanged(nameof(CurrentValue));   
 
             return Task.CompletedTask;
@@ -154,29 +158,26 @@ namespace SharedCalculator
 
         Task PowCommandExecute()
         {
-           left = Convert.ToDouble(CurrentValue);  
-           result = CalculatorService.Pow(left.Value);
-           newInput = true;
-           CurrentValue = result.ToString();
-
-            return Task.CompletedTask;
-        }
-
-        Task SqrtCommandExecute()
-        {
             left = Convert.ToDouble(CurrentValue);
-            result = CalculatorService.Sqrt(left.Value);
+            result = CalculatorService.Pow(left.Value);
             newInput = true;
             CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
 
+        Task SqrtCommandExecute()
+        {
+            // TODO Implement sqrt here
+            CurrentValue = "result here";
+
+            return Task.CompletedTask;
+        }
+
         Task AddMinusCommandExecute()
         {
-            currentValue = (currentValue[0] == '-') ? 
-                  currentValue.Remove(0, 1) 
-                : currentValue.Insert(0, "-");
+            // TODO Implement adding minus here
+            currentValue = "result here";
 
             RaisePropertyChanged(nameof(CurrentValue));
 
@@ -185,10 +186,13 @@ namespace SharedCalculator
 
         Task OneDivideCommandExecute()
         {
-            left = Convert.ToDouble(CurrentValue);
-            var res = CalculatorService.Divide(1, left.Value, out bool divideByZero);
+            // TODO Implement 1 / n 
+            left = 0;  // Get left side here
+            var res = 0; // Call dividing method here
             newInput = true;
-            
+            bool divideByZero = false;
+
+
             if (divideByZero)
             {
                 CurrentValue = "Divide by zero!";
