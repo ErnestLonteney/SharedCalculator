@@ -92,7 +92,7 @@ namespace SharedCalculator
             switch (sign)
             {
                 case '+':  // TODO Implement adding here
-                    result = 0;
+                    result = CalculatorService.Add(left.Value, right.Value);
                     break;
                 case '-':
                     // TODO Implement substraction here                  
