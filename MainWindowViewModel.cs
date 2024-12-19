@@ -1,6 +1,5 @@
 ﻿using DevExpress.Mvvm;
 using System;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace SharedCalculator
@@ -153,44 +152,38 @@ namespace SharedCalculator
             right = Convert.ToDouble(CurrentValue);
             if (left != 0 && right != 0)
             {
-                //сохраняем полученные проценты в переменную
-                var result = calculatePercents((double)left, (double)right);
-
                 //сброс значения переменной CurrentValue, для последуюшего присвоения ей результата операции
                 newInput = true;
 
                 switch (sign)
                 {
                     case '+':
-                        //явно приводим nullable-допустимый тип к double
-                        double add = ((double)left + result);
-
-                        //устанавливаем новое значение CurrentValue для отображения результата
+                        double add = left.Value + calculatePercents(left.Value, right.Value);
                         CurrentValue = add.ToString();
                         break;
 
                     case '-':
-                        double sub = ((double)left - result);
+                        double sub = left.Value - calculatePercents(left.Value, right.Value);
                         CurrentValue = sub.ToString();
                         break;
 
                     case '*':
-                        CurrentValue = result.ToString();
+                        double mul = left.Value * calculatePercents(left.Value, right.Value);
+                        CurrentValue = mul.ToString();
                         break;
 
                     case '/':
                         if (result != 0)
                         {
-                            double div = ((double)left / result);
+                            double div = left.Value / calculatePercents(left.Value, right.Value);
                             CurrentValue = div.ToString();
                             break;
                         }
                         else
                         {
-                            CurrentValue = 0.ToString();
+                            CurrentValue = "0";
                             break;
                         }
-
                 }
                
             }

@@ -28,15 +28,5 @@ namespace SharedCalculator
             DataContext = new MainWindowViewModel();
             
         }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is MainWindowViewModel viewModel)
-            {
-                
-                await viewModel.PercentCommandExecute();
-            }
-
-        }
     }
 }
