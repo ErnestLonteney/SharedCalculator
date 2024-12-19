@@ -100,7 +100,7 @@ namespace SharedCalculator
                     break;
                 case '/':
                     {
-                        double CalculationDivided(double left, double rights, out bool divedeByZero)
+                        double CalculationDivided(double left, double right, out bool divedeByZero)
                         {
 
                         if (divedeByZero)
