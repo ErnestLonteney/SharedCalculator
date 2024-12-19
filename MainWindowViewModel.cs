@@ -100,8 +100,8 @@ namespace SharedCalculator
                     break;
                 case '/':
                     {
-                        // TODO Implement dividing 
-                        bool divedeByZero = false;
+                        double CalculationDivided(double left, double rights, out bool divedeByZero)
+                        {
 
                         if (divedeByZero)
                         {
@@ -110,7 +110,8 @@ namespace SharedCalculator
                             return Task.CompletedTask; ;
                         }
                         else
-                            result = 0;
+                            return left / rights;
+                        }
                     }
                     break;
                 case '*':
