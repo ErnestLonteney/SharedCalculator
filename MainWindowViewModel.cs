@@ -152,11 +152,14 @@ namespace SharedCalculator
 
         Task PercentCommandExecute()
         {
-            // TODO Implement getting percent
-            CurrentValue = "result here";
+            right = Convert.ToDouble(CurrentValue);
+            var result = calculatePercents(left.Value, right.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
-            RaisePropertiesChanged(nameof(CurrentValue));   
+            RaisePropertiesChanged(nameof(CurrentValue));
 
+            newInput = true;
             return Task.CompletedTask;
         }
 
@@ -207,7 +210,10 @@ namespace SharedCalculator
 
             return Task.CompletedTask;
         }
-
+        double calculatePercents(double value, double percents)
+        {
+            return value / 100 * percents;
+        }
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
