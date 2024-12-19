@@ -158,10 +158,8 @@ namespace SharedCalculator
 
         Task PowCommandExecute()
         {
-            left = Convert.ToDouble(CurrentValue);
-            result = CalculatorService.Pow(left.Value);
-            newInput = true;
-            CurrentValue = result.ToString();
+
+            CurrentValue = "result here";
 
             return Task.CompletedTask;
         }
