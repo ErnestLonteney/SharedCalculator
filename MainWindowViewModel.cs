@@ -88,6 +88,12 @@ namespace SharedCalculator
 
         Task ResultCommandExecute()
         {
+            static bool DivideByZero(double? divisor)
+            {
+                if (divisor == 0) return false;
+                else return true;
+            }
+
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
@@ -100,15 +106,15 @@ namespace SharedCalculator
                     break;
                 case '/':
                     {
-                        if (right == 0)
+                        if (DivideByZero(right))
+                        {
+                            result = Convert.ToDouble(left / right);
+                        }
+                        else
                         {
                             newInput = true;
                             CurrentValue = "Divide by zero!";
                             return Task.CompletedTask;
-                        }
-                        else
-                        {
-                            result = Convert.ToDouble(left/right);
                         }
                     }
                     break;
