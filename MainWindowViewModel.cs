@@ -35,6 +35,11 @@ namespace SharedCalculator
             SqrtCommand = new AsyncCommand(SqrtCommandExecute, UnaryCanExecute);
             AddMinusCommand = new AsyncCommand(AddMinusCommandExecute, UnaryCanExecute);
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
+        }
+
+        private double Substract(double left, double right)
+        {
+            return left - right;
         }      
 
         public string CurrentValue
@@ -95,8 +100,7 @@ namespace SharedCalculator
                     result = 0;
                     break;
                 case '-':
-                    // TODO Implement substraction here                  
-                      result = 0;
+                    result = Substract(left.Value, right.Value);
                     break;
                 case '/':
                     {
