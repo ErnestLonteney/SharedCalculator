@@ -17,7 +17,7 @@ namespace SharedCalculator
         public IAsyncCommand PowCommand { get; }
         public AsyncCommand SqrtCommand { get; }
         public AsyncCommand AddMinusCommand { get; }   
-        public AsyncCommand OneDivideCommand { get; }   
+        public AsyncCommand OneDivideCommand { get; }
 
         double result = 0;
         string currentValue = "0";
@@ -37,6 +37,11 @@ namespace SharedCalculator
             SqrtCommand = new AsyncCommand(SqrtCommandExecute, UnaryCanExecute);
             AddMinusCommand = new AsyncCommand(AddMinusCommandExecute, UnaryCanExecute);
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
+        }
+
+        private double Substract(double left, double right)
+        {
+            return left - right;
         }      
 
         public string CurrentValue
@@ -98,8 +103,7 @@ namespace SharedCalculator
                     result = 0;
                     break;
                 case '-':
-                    // TODO Implement substraction here                  
-                      result = 0;
+                    result = Substract(left.Value, right.Value);
                     break;
                 case '/':
                     {
@@ -152,18 +156,23 @@ namespace SharedCalculator
 
         Task PercentCommandExecute()
         {
-            // TODO Implement getting percent
-            CurrentValue = "result here";
+            right = Convert.ToDouble(CurrentValue);
+            var result = calculatePercents(left.Value, right.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
-            RaisePropertiesChanged(nameof(CurrentValue));   
+            RaisePropertiesChanged(nameof(CurrentValue));
 
+            newInput = true;
             return Task.CompletedTask;
         }
 
         Task PowCommandExecute()
         {
-            // TODO Implement pow operation 
-            CurrentValue = "result here";
+            left = Convert.ToDouble(CurrentValue);
+            result = Pow(left.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
@@ -207,10 +216,11 @@ namespace SharedCalculator
 
             return Task.CompletedTask;
         }
-
+        double calculatePercents(double value, double percents)
+        {
+            return value / 100 * percents;
+        }
         bool CanResultCalculate() => left.HasValue && newInput == false;
-
-        bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
 
         double DivideOperation(double? dividend, double? divisor, out bool DivideOnZero)
         {
@@ -225,6 +235,10 @@ namespace SharedCalculator
                 return Convert.ToDouble(dividend / divisor);
             }
         }
+
+        bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
+
         #endregion
+        public static double Pow(double n) => Math.Pow(n, 2);
     }
 }
