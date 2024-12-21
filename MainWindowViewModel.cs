@@ -221,7 +221,7 @@ namespace SharedCalculator
             else 
             {
                 divedeByZero = false;
-                return left / right;
+                return (double)left / right;
             }
         }
 
