@@ -170,8 +170,7 @@ namespace SharedCalculator
 
         Task PowCommandExecute()
         {
-            left = Convert.ToDouble(CurrentValue);
-            result = Pow(left.Value);
+            result = Math.Pow(Convert.ToDouble(CurrentValue), 2);
             newInput = true;
             CurrentValue = result.ToString();
 
@@ -257,6 +256,5 @@ namespace SharedCalculator
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
 
         #endregion
-        static double Pow(double n) => Math.Pow(n, 2);
     }
 }
