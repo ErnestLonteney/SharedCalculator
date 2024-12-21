@@ -4,17 +4,17 @@ using System.Threading.Tasks;
 
 namespace SharedCalculator
 {
-    public class MainWindowViewModel : ViewModelBase 
+    public class MainWindowViewModel : ViewModelBase
     {
         public IAsyncCommand InputDigitCommand { get; }
-        public IAsyncCommand BackToZeroCommand { get; }   
+        public IAsyncCommand BackToZeroCommand { get; }
         public IAsyncCommand SignCommand { get; }
-        public IAsyncCommand ResultCommand { get; } 
+        public IAsyncCommand ResultCommand { get; }
         public IAsyncCommand BackspaceCommand { get; }
         public IAsyncCommand PercentCommand { get; }
         public IAsyncCommand PowCommand { get; }
         public AsyncCommand SqrtCommand { get; }
-        public AsyncCommand AddMinusCommand { get; }   
+        public AsyncCommand AddMinusCommand { get; }
         public AsyncCommand OneDivideCommand { get; }
 
         double result = 0;
@@ -35,16 +35,16 @@ namespace SharedCalculator
             SqrtCommand = new AsyncCommand(SqrtCommandExecute, UnaryCanExecute);
             AddMinusCommand = new AsyncCommand(AddMinusCommandExecute, UnaryCanExecute);
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
-        }      
+        }
 
         public string CurrentValue
         {
             get => currentValue;
-            set 
+            set
             {
                 if (value == "CE")
-                { 
-                    currentValue = "0"; 
+                {
+                    currentValue = "0";
                 }
                 else if (CurrentValue == "0" || newInput)
                 {
@@ -91,31 +91,28 @@ namespace SharedCalculator
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
+
                 case '+':  // TODO Implement adding here
                     result = CalculatorService.Add(left.Value, right.Value);
                     break;
                 case '-':
-                    // TODO Implement substraction here                  
-                      result = 0;
+                    result = CalculatorService.Subtraction(left.Value, right.Value);
                     break;
                 case '/':
                     {
-                        // TODO Implement dividing 
-                        bool divedeByZero = false;
-
-                        if (divedeByZero)
+                        var res = CalculatorService.Divide(left.Value, right.Value, out bool divedeOnZero);
+                        if (divedeOnZero)
                         {
                             newInput = true;
                             CurrentValue = "Divide by zero!";
                             return Task.CompletedTask; ;
                         }
                         else
-                            result = 0;
+                            result = res;
                     }
                     break;
                 case '*':
-                    // TODO Implement mulitiply 
-                    result = 0;
+                    result = CalculatorService.Multiply(left.Value, right.Value);
                     break;
             }
 
@@ -148,34 +145,40 @@ namespace SharedCalculator
 
         Task PercentCommandExecute()
         {
-            // TODO Implement getting percent
-            CurrentValue = "result here";
+            right = Convert.ToDouble(CurrentValue);
+            right = CalculatorService.GetPercent(left.Value, right.Value);
+            currentValue = right.Value.ToString();
 
-            RaisePropertiesChanged(nameof(CurrentValue));   
+            RaisePropertiesChanged(nameof(CurrentValue));
 
             return Task.CompletedTask;
         }
 
         Task PowCommandExecute()
         {
-
-            CurrentValue = "result here";
+            left = Convert.ToDouble(CurrentValue);
+            result = CalculatorService.Pow(left.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
 
         Task SqrtCommandExecute()
         {
-            // TODO Implement sqrt here
-            CurrentValue = "result here";
+            left = Convert.ToDouble(CurrentValue);
+            result = CalculatorService.Sqrt(left.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
 
         Task AddMinusCommandExecute()
         {
-            // TODO Implement adding minus here
-            currentValue = "result here";
+            currentValue = (currentValue[0] == '-') ?
+                  currentValue.Remove(0, 1)
+                : currentValue.Insert(0, "-");
 
             RaisePropertyChanged(nameof(CurrentValue));
 
@@ -184,12 +187,9 @@ namespace SharedCalculator
 
         Task OneDivideCommandExecute()
         {
-            // TODO Implement 1 / n 
-            left = 0;  // Get left side here
-            var res = 0; // Call dividing method here
+            left = Convert.ToDouble(CurrentValue);
+            var res = CalculatorService.Divide(1, left.Value, out bool divideByZero);
             newInput = true;
-            bool divideByZero = false;
-
 
             if (divideByZero)
             {
@@ -206,7 +206,7 @@ namespace SharedCalculator
 
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
-        bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
+        bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
         #endregion
     }
 }
