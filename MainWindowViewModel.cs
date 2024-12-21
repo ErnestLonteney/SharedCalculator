@@ -39,6 +39,10 @@ namespace SharedCalculator
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
         }
 
+        private double Add(double left, double right)
+        {
+            return left + right;
+        }
         private double Substract(double left, double right)
         {
             return left - right;
@@ -100,7 +104,7 @@ namespace SharedCalculator
             switch (sign)
             {
                 case '+':  // TODO Implement adding here
-                    result = 0;
+                    result = Add(left.Value, right.Value); ;
                     break;
                 case '-':
                     result = Substract(left.Value, right.Value);
