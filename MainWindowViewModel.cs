@@ -104,17 +104,13 @@ namespace SharedCalculator
                     break;
                 case '/':
                     {
-                        // TODO Implement dividing 
-                        bool divedeByZero = false;
-
-                        if (divedeByZero)
-                        {
-                            newInput = true;
+                        bool divideByZero;
+                        double result = CalculationDivided(left, right, out divideByZero);
+                        if (divideByZero) {
                             CurrentValue = "Divide by zero!";
-                            return Task.CompletedTask; ;
+                        } else {
+                            CurrentValue = result;
                         }
-                        else
-                            result = 0;
                     }
                     break;
                 case '*':
@@ -126,6 +122,7 @@ namespace SharedCalculator
             newInput = true;
             left = right = null;
             CurrentValue = result.ToString();
+        
 
             return Task.CompletedTask;
         }
@@ -212,10 +209,23 @@ namespace SharedCalculator
 
             return Task.CompletedTask;
         }
+
+        double CalculationDivided(double left, double right, out bool divedeByZero) {
+            if (right == 0) {
+                divedeByZero = true;
+                return double.NaN;
+            } else {
+                divideByZero = false;
+                return left / rights;
+            }
+        }
+
+
         double calculatePercents(double value, double percents)
         {
             return value / 100 * percents;
         }
+
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
