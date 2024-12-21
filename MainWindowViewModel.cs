@@ -210,13 +210,17 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
-        double CalculationDivided(double left, double right, out bool divedeByZero) {
-            if (right == 0) {
+        double CalculationDivided(double left, double right, out bool divedeByZero) 
+        {
+            if (right == 0) 
+            {
                 divedeByZero = true;
                 return double.NaN;
-            } else {
-                divideByZero = false;
-                return left / rights;
+            } 
+            else 
+            {
+                divedeByZero = false;
+                return left / right;
             }
         }
 
