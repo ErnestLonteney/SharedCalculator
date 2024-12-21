@@ -130,6 +130,7 @@ namespace SharedCalculator
             newInput = true;
             left = right = null;
             CurrentValue = result.ToString();
+        
 
             return Task.CompletedTask;
         }
@@ -216,10 +217,27 @@ namespace SharedCalculator
 
             return Task.CompletedTask;
         }
+
+        double CalculationDivided(double left, double right, out bool divedeByZero) 
+        {
+            if (right == 0) 
+            {
+                divedeByZero = true;
+                return double.NaN;
+            } 
+            else 
+            {
+                divedeByZero = false;
+                return (double)left / right;
+            }
+        }
+
+
         double calculatePercents(double value, double percents)
         {
             return value / 100 * percents;
         }
+
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
         double DivideOperation(double? dividend, double? divisor, out bool DivideOnZero)
