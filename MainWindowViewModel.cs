@@ -105,11 +105,12 @@ namespace SharedCalculator
                 case '/':
                     {
                         bool divideByZero;
-                        double result = CalculationDivided(left, right, out divideByZero);
+                        result = CalculationDivided(left.Value, right.Value, out divideByZero);
                         if (divideByZero) {
                             CurrentValue = "Divide by zero!";
-                        } else {
-                            CurrentValue = result;
+                        } else 
+                        {
+                            CurrentValue = result.ToString();
                         }
                     }
                     break;
