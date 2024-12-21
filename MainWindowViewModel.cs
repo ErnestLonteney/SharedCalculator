@@ -257,6 +257,6 @@ namespace SharedCalculator
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
 
         #endregion
-        public static double Pow(double n) => Math.Pow(n, 2);
+        static double Pow(double n) => Math.Pow(n, 2);
     }
 }
