@@ -105,10 +105,11 @@ namespace SharedCalculator
                 case '/':
                     {
                         bool divideByZero;
-                        double result = CalculationDivided((double) left, (double)right, out divideByZero);
+                        result = CalculationDivided(left.Value, right.Value, out divideByZero);
                         if (divideByZero) {
                             CurrentValue = "Divide by zero!";
-                        } else {
+                        } else 
+                        {
                             CurrentValue = result.ToString();
                         }
                     }
@@ -210,14 +211,17 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
-        double CalculationDivided(double left, double right, out bool divideByZero) 
+        double CalculationDivided(double left, double right, out bool divedeByZero) 
         {
-            if (right == 0) {
-                divideByZero = true;
+            if (right == 0) 
+            {
+                divedeByZero = true;
                 return double.NaN;
-            } else {
-                divideByZero = false;
-                return left / right;
+            } 
+            else 
+            {
+                divedeByZero = false;
+                return (double)left / right;
             }
         }
 
