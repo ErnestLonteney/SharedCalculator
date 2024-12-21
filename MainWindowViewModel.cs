@@ -1,6 +1,8 @@
 ﻿using DevExpress.Mvvm;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Media.TextFormatting;
 
 namespace SharedCalculator
 {
@@ -93,6 +95,7 @@ namespace SharedCalculator
 
         Task ResultCommandExecute()
         {
+
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
@@ -104,13 +107,17 @@ namespace SharedCalculator
                     break;
                 case '/':
                     {
-                        bool divideByZero;
-                        result = CalculationDivided(left.Value, right.Value, out divideByZero);
-                        if (divideByZero) {
-                            CurrentValue = "Divide by zero!";
-                        } else 
+                        double temp = DivideOperation(left, right, out bool DivideByZero);
+                        
+                        if (DivideByZero)
                         {
-                            CurrentValue = result.ToString();
+                            newInput = true;
+                            CurrentValue = "Divide by zero!";
+                            return Task.CompletedTask;
+                        }
+                        else
+                        {
+                            result = temp;
                         }
                     }
                     break;
@@ -233,7 +240,22 @@ namespace SharedCalculator
 
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
+        double DivideOperation(double? dividend, double? divisor, out bool DivideOnZero)
+        {
+            if (divisor == 0)
+            { 
+                DivideOnZero = true;
+                return 0;
+            }
+            else 
+            {  
+                DivideOnZero = false;
+                return Convert.ToDouble(dividend / divisor);
+            }
+        }
+
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
+
         #endregion
         public static double Pow(double n) => Math.Pow(n, 2);
     }
