@@ -105,11 +105,11 @@ namespace SharedCalculator
                 case '/':
                     {
                         bool divideByZero;
-                        double result = CalculationDivided(left, right, out divideByZero);
+                        double result = CalculationDivided((double)left, (double)right, out divideByZero);
                         if (divideByZero) {
                             CurrentValue = "Divide by zero!";
                         } else {
-                            CurrentValue = result;
+                            CurrentValue = result.ToString();
                         }
                     }
                     break;
@@ -173,7 +173,10 @@ namespace SharedCalculator
         Task SqrtCommandExecute()
         {
             // TODO Implement sqrt here
-            CurrentValue = "result here";
+            left = Convert.ToDouble(CurrentValue);
+            result = Math.Sqrt(left.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
@@ -215,8 +218,8 @@ namespace SharedCalculator
                 divedeByZero = true;
                 return double.NaN;
             } else {
-                divideByZero = false;
-                return left / rights;
+                divedeByZero = false;
+                return left / right;
             }
         }
 
@@ -231,5 +234,14 @@ namespace SharedCalculator
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
         #endregion
         public static double Pow(double n) => Math.Pow(n, 2);
+
+        //private string CalculateSqrt(string currentValue)
+        //{
+        //    left = Convert.ToDouble(currentValue);
+        //    result = Math.Sqrt((double)left);
+
+        //    return result.ToString();
+
+        //}
     }
 }
