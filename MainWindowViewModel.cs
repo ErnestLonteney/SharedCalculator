@@ -91,8 +91,7 @@ namespace SharedCalculator
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
-
-                case '+':  // TODO Implement adding here
+                case '+':
                     result = CalculatorService.Add(left.Value, right.Value);
                     break;
                 case '-':
