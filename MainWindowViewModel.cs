@@ -105,11 +105,11 @@ namespace SharedCalculator
                 case '/':
                     {
                         bool divideByZero;
-                        double result = CalculationDivided(left, right, out divideByZero);
+                        double result = CalculationDivided((double) left, (double)right, out divideByZero);
                         if (divideByZero) {
                             CurrentValue = "Divide by zero!";
                         } else {
-                            CurrentValue = result;
+                            CurrentValue = result.ToString();
                         }
                     }
                     break;
@@ -191,10 +191,10 @@ namespace SharedCalculator
         Task OneDivideCommandExecute()
         {
             // TODO Implement 1 / n 
-            left = 0;  // Get left side here
-            var res = 0; // Call dividing method here
+            double right = Convert.ToDouble(CurrentValue);
+            var res = CalculationDivided(1, right, out bool divideByZero); 
             newInput = true;
-            bool divideByZero = false;
+           
 
 
             if (divideByZero)
@@ -210,13 +210,14 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
-        double CalculationDivided(double left, double right, out bool divedeByZero) {
+        double CalculationDivided(double left, double right, out bool divideByZero) 
+        {
             if (right == 0) {
-                divedeByZero = true;
+                divideByZero = true;
                 return double.NaN;
             } else {
                 divideByZero = false;
-                return left / rights;
+                return left / right;
             }
         }
 
