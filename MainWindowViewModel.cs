@@ -192,10 +192,10 @@ namespace SharedCalculator
         Task OneDivideCommandExecute()
         {
             // TODO Implement 1 / n 
-            left = 0;  // Get left side here
-            var res = 0; // Call dividing method here
+            double right = Convert.ToDouble(CurrentValue);
+            var res = CalculationDivided(1, right, out bool divideByZero); 
             newInput = true;
-            bool divideByZero = false;
+           
 
 
             if (divideByZero)
