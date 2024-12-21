@@ -166,9 +166,11 @@ namespace SharedCalculator
 
         Task SqrtCommandExecute()
         {
-                                    
-            currentValue = CalculateSqrt(CurrentValue);
-            
+            left = Convert.ToDouble(CurrentValue);
+            result = CalculatorService.Sqrt(left.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
+
             return Task.CompletedTask;
         }
 
@@ -209,13 +211,13 @@ namespace SharedCalculator
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
         #endregion
 
-        public string CalculateSqrt(string currentValue)
-        {
-            left = Convert.ToDouble(currentValue);
-            result = Math.Sqrt((double)left);            
+        //private string CalculateSqrt(string currentValue)
+        //{
+        //    left = Convert.ToDouble(currentValue);
+        //    result = Math.Sqrt((double)left);            
 
-            return result.ToString();
+        //    return result.ToString();
 
-        }
+        //}
     }
 }
