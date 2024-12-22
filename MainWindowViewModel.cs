@@ -234,13 +234,6 @@ namespace SharedCalculator
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
         #endregion
         public static double Pow(double n) => Math.Pow(n, 2);
-
-        //private string CalculateSqrt(string currentValue)
-        //{
-        //    left = Convert.ToDouble(currentValue);
-        //    result = Math.Sqrt((double)left);
-
-        //    return result.ToString();
-        //}
+       
     }
 }
