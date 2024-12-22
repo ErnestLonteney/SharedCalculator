@@ -241,7 +241,6 @@ namespace SharedCalculator
         //    result = Math.Sqrt((double)left);
 
         //    return result.ToString();
-
         //}
     }
 }
