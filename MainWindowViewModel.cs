@@ -184,7 +184,10 @@ namespace SharedCalculator
         Task SqrtCommandExecute()
         {
             // TODO Implement sqrt here
-            CurrentValue = "result here";
+            left = Convert.ToDouble(CurrentValue);
+            result = Math.Sqrt(left.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
