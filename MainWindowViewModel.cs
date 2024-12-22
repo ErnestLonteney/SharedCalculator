@@ -1,6 +1,8 @@
 ﻿using DevExpress.Mvvm;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Media.TextFormatting;
 
 namespace SharedCalculator
 {
@@ -37,6 +39,10 @@ namespace SharedCalculator
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
         }
 
+        private double Add(double left, double right)
+        {
+            return left + right;
+        }
         private double Substract(double left, double right)
         {
             return left - right;
@@ -93,23 +99,29 @@ namespace SharedCalculator
 
         Task ResultCommandExecute()
         {
+
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
                 case '+':  // TODO Implement adding here
-                    result = 0;
+                    result = Add(left.Value, right.Value); ;
                     break;
                 case '-':
                     result = Substract(left.Value, right.Value);
                     break;
                 case '/':
                     {
-                        bool divideByZero;
-                        double result = CalculationDivided((double)left, (double)right, out divideByZero);
-                        if (divideByZero) {
+                        double temp = DivideOperation(left, right, out bool DivideByZero);
+                        
+                        if (DivideByZero)
+                        {
+                            newInput = true;
                             CurrentValue = "Divide by zero!";
-                        } else {
-                            CurrentValue = result.ToString();
+                            return Task.CompletedTask;
+                        }
+                        else
+                        {
+                            result = temp;
                         }
                     }
                     break;
@@ -162,8 +174,7 @@ namespace SharedCalculator
 
         Task PowCommandExecute()
         {
-            left = Convert.ToDouble(CurrentValue);
-            result = Pow(left.Value);
+            result = Math.Pow(Convert.ToDouble(CurrentValue), 2);
             newInput = true;
             CurrentValue = result.ToString();
 
@@ -194,10 +205,10 @@ namespace SharedCalculator
         Task OneDivideCommandExecute()
         {
             // TODO Implement 1 / n 
-            left = 0;  // Get left side here
-            var res = 0; // Call dividing method here
+            double right = Convert.ToDouble(CurrentValue);
+            var res = CalculationDivided(1, right, out bool divideByZero); 
             newInput = true;
-            bool divideByZero = false;
+           
 
 
             if (divideByZero)
@@ -213,13 +224,17 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
-        double CalculationDivided(double left, double right, out bool divedeByZero) {
-            if (right == 0) {
+        double CalculationDivided(double left, double right, out bool divedeByZero) 
+        {
+            if (right == 0) 
+            {
                 divedeByZero = true;
                 return double.NaN;
-            } else {
+            } 
+            else 
+            {
                 divedeByZero = false;
-                return left / right;
+                return (double)left / right;
             }
         }
 
@@ -231,9 +246,22 @@ namespace SharedCalculator
 
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
+        double DivideOperation(double? dividend, double? divisor, out bool DivideOnZero)
+        {
+            if (divisor == 0)
+            { 
+                DivideOnZero = true;
+                return 0;
+            }
+            else 
+            {  
+                DivideOnZero = false;
+                return Convert.ToDouble(dividend / divisor);
+            }
+        }
+
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
+
         #endregion
-        public static double Pow(double n) => Math.Pow(n, 2);
-       
     }
 }
