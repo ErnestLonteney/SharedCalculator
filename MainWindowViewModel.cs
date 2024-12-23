@@ -194,7 +194,7 @@ namespace SharedCalculator
 
         Task AddMinusCommandExecute()
         {
-            // TODO Implement adding minus here
+            
             currentValue = "result here";
 
             RaisePropertyChanged(nameof(CurrentValue));
