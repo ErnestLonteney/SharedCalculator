@@ -194,8 +194,16 @@ namespace SharedCalculator
 
         Task AddMinusCommandExecute()
         {
-            // TODO Implement adding minus here
-            currentValue = "result here";
+
+            if (double.TryParse(currentValue, out double numValue))
+            {
+                numValue *= -1;
+                currentValue = numValue.ToString();
+            }
+            else
+            {
+                currentValue = "0";
+            }
 
             RaisePropertyChanged(nameof(CurrentValue));
 
