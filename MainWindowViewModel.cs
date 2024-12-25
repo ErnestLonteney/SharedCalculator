@@ -1,7 +1,8 @@
 ﻿using DevExpress.Mvvm;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
+using System.Windows.Documents;
+using System.Windows.Media.TextFormatting;
 
 namespace SharedCalculator
 {
@@ -16,7 +17,7 @@ namespace SharedCalculator
         public IAsyncCommand PowCommand { get; }
         public AsyncCommand SqrtCommand { get; }
         public AsyncCommand AddMinusCommand { get; }   
-        public AsyncCommand OneDivideCommand { get; }   
+        public AsyncCommand OneDivideCommand { get; }
 
         double result = 0;
         string currentValue = "0";
@@ -36,6 +37,15 @@ namespace SharedCalculator
             SqrtCommand = new AsyncCommand(SqrtCommandExecute, UnaryCanExecute);
             AddMinusCommand = new AsyncCommand(AddMinusCommandExecute, UnaryCanExecute);
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
+        }
+
+        private double Add(double left, double right)
+        {
+            return left + right;
+        }
+        private double Substract(double left, double right)
+        {
+            return left - right;
         }      
 
         public string CurrentValue
@@ -89,29 +99,30 @@ namespace SharedCalculator
 
         Task ResultCommandExecute()
         {
+
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
                 case '+':  // TODO Implement adding here
-                    result = 0;
+                    result = Add(left.Value, right.Value); ;
                     break;
                 case '-':
-                    // TODO Implement substraction here                  
-                      result = 0;
+                    result = Substract(left.Value, right.Value);
                     break;
                 case '/':
                     {
-                        // TODO Implement dividing 
-                        bool divedeByZero = false;
-
-                        if (divedeByZero)
+                        double temp = DivideOperation(left, right, out bool DivideByZero);
+                        
+                        if (DivideByZero)
                         {
                             newInput = true;
                             CurrentValue = "Divide by zero!";
-                            return Task.CompletedTask; ;
+                            return Task.CompletedTask;
                         }
                         else
-                            result = 0;
+                        {
+                            result = temp;
+                        }
                     }
                     break;
                 case '*':
@@ -122,6 +133,7 @@ namespace SharedCalculator
             newInput = true;
             left = right = null;
             CurrentValue = result.ToString();
+        
 
             return Task.CompletedTask;
         }
@@ -148,18 +160,22 @@ namespace SharedCalculator
 
         Task PercentCommandExecute()
         {
-            // TODO Implement getting percent
-            CurrentValue = "result here";
+            right = Convert.ToDouble(CurrentValue);
+            var result = calculatePercents(left.Value, right.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
-            RaisePropertiesChanged(nameof(CurrentValue));   
+            RaisePropertiesChanged(nameof(CurrentValue));
 
+            newInput = true;
             return Task.CompletedTask;
         }
 
         Task PowCommandExecute()
         {
-            // TODO Implement pow operation 
-            CurrentValue = "result here";
+            result = Math.Pow(Convert.ToDouble(CurrentValue), 2);
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
@@ -167,15 +183,26 @@ namespace SharedCalculator
         Task SqrtCommandExecute()
         {
             // TODO Implement sqrt here
-            CurrentValue = "result here";
+            left = Convert.ToDouble(CurrentValue);
+            result = Math.Sqrt(left.Value);
+            newInput = true;
+            CurrentValue = result.ToString();
 
             return Task.CompletedTask;
         }
 
         Task AddMinusCommandExecute()
         {
-            // TODO Implement adding minus here
-            currentValue = "result here";
+
+            if (double.TryParse(currentValue, out double numValue))
+            {
+                numValue *= -1;
+                currentValue = numValue.ToString();
+            }
+            else
+            {
+                currentValue = "0";
+            }
 
             RaisePropertyChanged(nameof(CurrentValue));
 
@@ -185,10 +212,10 @@ namespace SharedCalculator
         Task OneDivideCommandExecute()
         {
             // TODO Implement 1 / n 
-            left = 0;  // Get left side here
-            var res = 0; // Call dividing method here
+            double right = Convert.ToDouble(CurrentValue);
+            var res = CalculationDivided(1, right, out bool divideByZero); 
             newInput = true;
-            bool divideByZero = false;
+           
 
 
             if (divideByZero)
@@ -204,11 +231,49 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
+        double CalculationDivided(double left, double right, out bool divedeByZero) 
+        {
+            if (right == 0) 
+            {
+                divedeByZero = true;
+                return double.NaN;
+            } 
+            else 
+            {
+                divedeByZero = false;
+                return (double)left / right;
+            }
+        }
+
+
+        double calculatePercents(double value, double percents)
+        {
+            return value / 100 * percents;
+        }
+
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
+      
         double Mulitiply(double a, double b)
         { return a * b; }
+
+        double DivideOperation(double? dividend, double? divisor, out bool DivideOnZero)
+        {
+            if (divisor == 0)
+            { 
+                DivideOnZero = true;
+                return 0;
+            }
+            else 
+            {  
+                DivideOnZero = false;
+                return Convert.ToDouble(dividend / divisor);
+            }
+        }
+
+        bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
+
         #endregion
     }
 }
