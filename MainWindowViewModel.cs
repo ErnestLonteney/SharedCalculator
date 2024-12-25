@@ -114,8 +114,7 @@ namespace SharedCalculator
                     }
                     break;
                 case '*':
-                    // TODO Implement mulitiply 
-                    result = 0;
+                   // result = Mulitiply(left, right);
                     break;
             }
 
