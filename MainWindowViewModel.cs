@@ -126,8 +126,7 @@ namespace SharedCalculator
                     }
                     break;
                 case '*':
-                    // TODO Implement mulitiply 
-                    result = 0;
+                    result = Mulitiply((double)left, (double)right);
                     break;
             }
 
@@ -253,6 +252,11 @@ namespace SharedCalculator
         }
 
         bool CanResultCalculate() => left.HasValue && newInput == false;
+
+        bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
+      
+        double Mulitiply(double a, double b)
+        { return a * b; }
 
         double DivideOperation(double? dividend, double? divisor, out bool DivideOnZero)
         {
