@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace SharedCalculator
 {
@@ -114,7 +115,7 @@ namespace SharedCalculator
                     }
                     break;
                 case '*':
-                   // result = Mulitiply(left, right);
+                    result = Mulitiply((double)left, (double)right);
                     break;
             }
 
@@ -206,6 +207,8 @@ namespace SharedCalculator
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
+        double Mulitiply(double a, double b)
+        { return a * b; }
         #endregion
     }
 }
