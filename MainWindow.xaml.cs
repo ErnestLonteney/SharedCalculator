@@ -21,7 +21,7 @@ namespace SharedCalculator
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// 
+        ///  Main window
         /// </summary>
         public MainWindow()
         {
