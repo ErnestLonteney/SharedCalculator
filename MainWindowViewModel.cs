@@ -274,6 +274,11 @@ namespace SharedCalculator
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
 
+        double Substration(double a, double b)
+        { 
+            return a - b;
+        }
+
         #endregion
     }
 }
