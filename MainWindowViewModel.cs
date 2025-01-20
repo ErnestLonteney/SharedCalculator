@@ -274,16 +274,13 @@ namespace SharedCalculator
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
 
-        double Substration(double a, double b)
+        double Substration (double a, double b)
         { 
             return a - b;
         }
         static void CalculateDescriminant (float a, float b, float c)
         {
             float descriminant = (float)Math.Pow(b,2) - 4 * a * c;
-            
-            Console.Write($"Дескримінант дорівнює: {descriminant}");
-
             float x1;
             float x2;
 
@@ -291,23 +288,19 @@ namespace SharedCalculator
 //Якщо дискримінант менше нуля (D < 0), рівняння не має дійсних коренів.
             if (descriminant < '0')
             {
-            Console.WriteLine(" рівняння не має дійсних коренів");
+                return new Exception();
             }
 //Якщо дискримінант дорівнює 0 (D = 0), рівняння має один дійсний корінь.
            if (descriminant == '0')
            {
-           Console.WriteLine(" рівняння має один дійсний корінь");
            x1 = -b/(2*a);
-           Console.WriteLine($"корінь дорівнює:{x1}");
            }
 
 //Якщо дискримінант більший за 0 (D > 0), рівняння має два різних дійсних коренів.
            if (descriminant > '0')
            {
-           Console.WriteLine(" рівняння має два різних дійсних корені.");
            x1 = -b+(float)Math.Sqrt(descriminant)/(2*a);
            x2 = -b-(float)Math.Sqrt(descriminant)/(2*a);
-           Console.WriteLine($"перший корінь дорівнює:{x1}, другий корінь дорівнює:{x2}");
            }
         }
 
