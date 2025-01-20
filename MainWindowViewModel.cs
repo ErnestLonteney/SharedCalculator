@@ -278,9 +278,6 @@ namespace SharedCalculator
         { 
             return a - b;
         }
-        {
-    class System
-    {
         static void CalculateDescriminant (float a, float b, float c)
         {
             float descriminant = (float)Math.Pow(b,2) - 4 * a * c;
@@ -314,20 +311,6 @@ namespace SharedCalculator
            }
         }
 
-        static void Main()
-        {
-            Console.WriteLine("Input a please");
-            float a = float.Parse(Console.ReadLine());
-            Console.WriteLine("Input b please");
-            float b = float.Parse(Console.ReadLine());
-            Console.WriteLine("Input c please");
-            float c = float.Parse(Console.ReadLine());
-
-            CalculateDescriminant (a, b, c);
-        }
-
+        #endregion
     }
 }
-        #endregion
-        //new commit
-    }
