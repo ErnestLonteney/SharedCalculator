@@ -278,30 +278,10 @@ namespace SharedCalculator
         { 
             return a - b;
         }
-        static void CalculateDescriminant (float a, float b, float c)
+        static float GetDescriminant (float a, float b, float c)
         {
             float descriminant = (float)Math.Pow(b,2) - 4 * a * c;
-            float x1;
-            float x2;
-
-//Написати програму яка буде вираховувати квадратні корені рівняння. Нагадую що є три сценарія - коли Д <0 Д>0 і Д==0
-//Якщо дискримінант менше нуля (D < 0), рівняння не має дійсних коренів.
-            if (descriminant < '0')
-            {
-                return new Exception();
-            }
-//Якщо дискримінант дорівнює 0 (D = 0), рівняння має один дійсний корінь.
-           if (descriminant == '0')
-           {
-           x1 = -b/(2*a);
-           }
-
-//Якщо дискримінант більший за 0 (D > 0), рівняння має два різних дійсних коренів.
-           if (descriminant > '0')
-           {
-           x1 = -b+(float)Math.Sqrt(descriminant)/(2*a);
-           x2 = -b-(float)Math.Sqrt(descriminant)/(2*a);
-           }
+            return descriminant;
         }
 
         #endregion
