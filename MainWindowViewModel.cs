@@ -273,10 +273,14 @@ namespace SharedCalculator
         }
 
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
-
-        double Substration(double a, double b)
+        double Substration (double a, double b)
         { 
             return a - b;
+        }
+        static float GetDescriminant (float a, float b, float c)
+        {
+            float descriminant = (float)Math.Pow(b,2) - 4 * a * c;
+            return descriminant;
         }
 
         #endregion
