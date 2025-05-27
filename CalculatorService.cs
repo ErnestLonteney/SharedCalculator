@@ -8,7 +8,6 @@ namespace SharedCalculator
         public static double Subtraction(double a, double b) => a - b;
         public static double Divide(double a, double b, out bool diveOnZero)
         {
-            //added test comment
             if (b == 0)
             {
                 diveOnZero = true;
