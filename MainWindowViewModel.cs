@@ -174,7 +174,7 @@ namespace SharedCalculator
         // Цибрій Андрій
         double Sqrt(double value)
         {
-            throw new NotImplementedException();
+            return Math.Sqrt(value);
         }
 
         Task BackspaceCommandExecute()
