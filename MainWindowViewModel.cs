@@ -1,22 +1,20 @@
 ﻿using DevExpress.Mvvm;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Media.TextFormatting;
 
 namespace SharedCalculator
 {
-    public class MainWindowViewModel : ViewModelBase 
+    public class MainWindowViewModel : ViewModelBase
     {
         public IAsyncCommand InputDigitCommand { get; }
-        public IAsyncCommand BackToZeroCommand { get; }   
+        public IAsyncCommand BackToZeroCommand { get; }
         public IAsyncCommand SignCommand { get; }
-        public IAsyncCommand ResultCommand { get; } 
+        public IAsyncCommand ResultCommand { get; }
         public IAsyncCommand BackspaceCommand { get; }
         public IAsyncCommand PercentCommand { get; }
         public IAsyncCommand PowCommand { get; }
         public AsyncCommand SqrtCommand { get; }
-        public AsyncCommand AddMinusCommand { get; }   
+        public AsyncCommand AddMinusCommand { get; }
         public AsyncCommand OneDivideCommand { get; }
 
         double result = 0;
@@ -39,23 +37,14 @@ namespace SharedCalculator
             OneDivideCommand = new AsyncCommand(OneDivideCommandExecute, UnaryCanExecute);
         }
 
-        private double Add(double left, double right)
-        {
-            return left + right;
-        }
-        private double Substract(double left, double right)
-        {
-            return left - right;
-        }      
-
         public string CurrentValue
         {
             get => currentValue;
-            set 
+            set
             {
                 if (value == "CE")
-                { 
-                    currentValue = "0"; 
+                {
+                    currentValue = "0";
                 }
                 else if (CurrentValue == "0" || newInput)
                 {
@@ -99,43 +88,73 @@ namespace SharedCalculator
 
         Task ResultCommandExecute()
         {
-
             right = Convert.ToDouble(CurrentValue);
             switch (sign)
             {
-                case '+':  // TODO Implement adding here
-                    result = Add(left.Value, right.Value); ;
+                case '+':
+                    result = Add(left.Value, right.Value);
                     break;
                 case '-':
-                    result = Substract(left.Value, right.Value);
+                    result = Subtraction(left.Value, right.Value);
                     break;
                 case '/':
                     {
-                        double temp = DivideOperation(left, right, out bool DivideByZero);
-                        
-                        if (DivideByZero)
+                        var res = Divide(left.Value, right.Value, out bool divedeOnZero);
+                        if (divedeOnZero)
                         {
                             newInput = true;
                             CurrentValue = "Divide by zero!";
-                            return Task.CompletedTask;
+                            return Task.CompletedTask; ;
                         }
                         else
-                        {
-                            result = temp;
-                        }
+                            result = res;
                     }
                     break;
                 case '*':
-                    result = Mulitiply((double)left, (double)right);
+                    result = Multiply(left.Value, right.Value);
                     break;
             }
 
             newInput = true;
             left = right = null;
             CurrentValue = result.ToString();
-        
 
             return Task.CompletedTask;
+        }
+
+        double Multiply(double value1, double value2)
+        {
+            throw new NotImplementedException();
+        }
+
+        double Divide(double value1, double value2, out bool divedeOnZero)
+        {
+            throw new NotImplementedException();
+        }
+
+        double Subtraction(double value1, double value2)
+        {
+            throw new NotImplementedException();
+        }
+
+        double Add(double value1, double value2)
+        {
+            throw new NotImplementedException();
+        }
+
+        double? GetPercent(double value1, double value2)
+        {
+            throw new NotImplementedException();
+        }
+
+        double Pow(double value)
+        {
+            throw new NotImplementedException();
+        }
+
+        double Sqrt(double value)
+        {
+            throw new NotImplementedException();
         }
 
         Task BackspaceCommandExecute()
@@ -161,19 +180,18 @@ namespace SharedCalculator
         Task PercentCommandExecute()
         {
             right = Convert.ToDouble(CurrentValue);
-            var result = calculatePercents(left.Value, right.Value);
-            newInput = true;
-            CurrentValue = result.ToString();
+            right = GetPercent(left.Value, right.Value);
+            currentValue = right.Value.ToString();
 
             RaisePropertiesChanged(nameof(CurrentValue));
 
-            newInput = true;
             return Task.CompletedTask;
         }
-
+      
         Task PowCommandExecute()
         {
-            result = Math.Pow(Convert.ToDouble(CurrentValue), 2);
+            left = Convert.ToDouble(CurrentValue);
+            result = Pow(left.Value);
             newInput = true;
             CurrentValue = result.ToString();
 
@@ -182,9 +200,8 @@ namespace SharedCalculator
 
         Task SqrtCommandExecute()
         {
-            // TODO Implement sqrt here
             left = Convert.ToDouble(CurrentValue);
-            result = Math.Sqrt(left.Value);
+            result = Sqrt(left.Value);
             newInput = true;
             CurrentValue = result.ToString();
 
@@ -193,16 +210,9 @@ namespace SharedCalculator
 
         Task AddMinusCommandExecute()
         {
-
-            if (double.TryParse(currentValue, out double numValue))
-            {
-                numValue *= -1;
-                currentValue = numValue.ToString();
-            }
-            else
-            {
-                currentValue = "0";
-            }
+            currentValue = (currentValue[0] == '-') ?
+                  currentValue.Remove(0, 1)
+                : currentValue.Insert(0, "-");
 
             RaisePropertyChanged(nameof(CurrentValue));
 
@@ -211,12 +221,9 @@ namespace SharedCalculator
 
         Task OneDivideCommandExecute()
         {
-            // TODO Implement 1 / n 
-            double right = Convert.ToDouble(CurrentValue);
-            var res = CalculationDivided(1, right, out bool divideByZero); 
+            left = Convert.ToDouble(CurrentValue);
+            var res = Divide(1, left.Value, out bool divideByZero);
             newInput = true;
-           
-
 
             if (divideByZero)
             {
@@ -231,58 +238,9 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
-        double CalculationDivided(double left, double right, out bool divedeByZero) 
-        {
-            if (right == 0) 
-            {
-                divedeByZero = true;
-                return double.NaN;
-            } 
-            else 
-            {
-                divedeByZero = false;
-                return (double)left / right;
-            }
-        }
-
-
-        double calculatePercents(double value, double percents)
-        {
-            return value / 100 * percents;
-        }
-
         bool CanResultCalculate() => left.HasValue && newInput == false;
 
-        bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;  
-      
-        double Mulitiply(double a, double b)
-        { return a * b; }
-
-        double DivideOperation(double? dividend, double? divisor, out bool DivideOnZero)
-        {
-            if (divisor == 0)
-            { 
-                DivideOnZero = true;
-                return 0;
-            }
-            else 
-            {  
-                DivideOnZero = false;
-                return Convert.ToDouble(dividend / divisor);
-            }
-        }
-
         bool UnaryCanExecute() => currentValue != "0" && !right.HasValue;
-        double Substration (double a, double b)
-        { 
-            return a - b;
-        }
-        static float GetDescriminant (float a, float b, float c)
-        {
-            float descriminant = (float)Math.Pow(b,2) - 4 * a * c;
-            return descriminant;
-        }
-
         #endregion
     }
 }
