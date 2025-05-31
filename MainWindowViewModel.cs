@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace SharedCalculator
 {
-    // MainWindowViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         public IAsyncCommand InputDigitCommand { get; }
