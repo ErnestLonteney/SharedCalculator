@@ -122,36 +122,56 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
+        // Олексій
+        
         double Multiply(double value1, double value2)
         {
             throw new NotImplementedException();
         }
 
+        // Роман Борiдько
+        double Multiply2(double value1, double value2)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Денис Кочубейник
         double Divide(double value1, double value2, out bool divedeOnZero)
         {
             throw new NotImplementedException();
         }
 
+        // Антон Лапоногов
         double Subtraction(double value1, double value2)
         {
             throw new NotImplementedException();
         }
 
+        // Антон Караванський
         double Add(double value1, double value2)
         {
             throw new NotImplementedException();
         }
 
+        // Тарас Соловей
         double? GetPercent(double value1, double value2)
         {
             throw new NotImplementedException();
         }
 
+        // Богдан Тишковець
         double Pow(double value)
         {
             throw new NotImplementedException();
         }
+        
+        // Богохвал Максим
+        double Pow2(double value)
+        {
+            throw new NotImplementedException();
+        }
 
+        // Цибрій Андрій
         double Sqrt(double value)
         {
             throw new NotImplementedException();
