@@ -136,9 +136,18 @@ namespace SharedCalculator
         }
 
         // Денис Кочубейник
-        double Divide(double value1, double value2, out bool divedeOnZero)
+        double Divide(double value1, double value2, out bool divideOnZero)
         {
-            throw new NotImplementedException();
+            if(value2 == 0)
+            { 
+                divideOnZero = true;
+                return -1;
+            }
+            else
+            {
+                divideOnZero = false;
+                return value1 / value2;
+            }
         }
 
         // Антон Лапоногов
