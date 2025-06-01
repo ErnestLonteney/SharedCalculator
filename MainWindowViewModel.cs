@@ -171,11 +171,7 @@ namespace SharedCalculator
             throw new NotImplementedException();
         }
 
-        // Цибрій Андрій
-        double Sqrt(double value)
-        {
-            return Math.Sqrt(value);
-        }
+        // Цибрій Андрій Sqrt
 
         Task BackspaceCommandExecute()
         {
@@ -221,7 +217,7 @@ namespace SharedCalculator
         Task SqrtCommandExecute()
         {
             left = Convert.ToDouble(CurrentValue);
-            result = Sqrt(left.Value);
+            result = Math.Sqrt(left.Value);
             newInput = true;
             CurrentValue = result.ToString();
 
