@@ -150,7 +150,7 @@ namespace SharedCalculator
         // Антон Караванський
         double Add(double value1, double value2)
         {
-            throw new NotImplementedException();
+            return value1 + value2;
         }
 
         // Тарас Соловей
