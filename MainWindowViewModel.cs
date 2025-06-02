@@ -111,7 +111,6 @@ namespace SharedCalculator
                     }
                     break;
                 case '*':
-                    result = Multiply(left.Value, right.Value);
                     result = Multiply2(left.Value, right.Value);
                     break;
             }
