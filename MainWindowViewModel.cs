@@ -168,7 +168,7 @@ namespace SharedCalculator
         // Богохвал Максим
         double Pow2(double value)
         {
-            return value * value;
+            return Math.Pow(value, 2);
         }
 
         // Цибрій Андрій
@@ -211,7 +211,7 @@ namespace SharedCalculator
         Task PowCommandExecute()
         {
             left = Convert.ToDouble(CurrentValue);
-            result = Pow(left.Value);
+            result = Pow2(left.Value);
             newInput = true;
             CurrentValue = result.ToString();
 
