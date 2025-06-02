@@ -163,7 +163,7 @@ namespace SharedCalculator
         // Богдан Тишковець
         double Pow(double value)
         {
-            throw new NotImplementedException();
+            return Math.Pow(value, 2);
         }
         
         // Богохвал Максим
