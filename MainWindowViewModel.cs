@@ -111,7 +111,7 @@ namespace SharedCalculator
                     }
                     break;
                 case '*':
-                    result = Multiply2(left.Value, right.Value);
+                    result = Multiply(left.Value, right.Value);
                     break;
             }
 
@@ -126,7 +126,8 @@ namespace SharedCalculator
         
         double Multiply(double value1, double value2)
         {
-            throw new NotImplementedException();
+            double result = value1 * value2;
+            return result;
         }
 
         // Роман Борiдько
