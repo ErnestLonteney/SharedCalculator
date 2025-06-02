@@ -168,7 +168,7 @@ namespace SharedCalculator
         // Богохвал Максим
         double Pow2(double value)
         {
-            throw new NotImplementedException();
+            return value * value;
         }
 
         // Цибрій Андрій
