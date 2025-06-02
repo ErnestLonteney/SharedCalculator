@@ -170,7 +170,7 @@ namespace SharedCalculator
         // Богохвал Максим
         double Pow2(double value)
         {
-            throw new NotImplementedException();
+            return Math.Pow(value, 2);
         }
 
         // Цибрій Андрій Sqrt
