@@ -211,7 +211,7 @@ namespace SharedCalculator
         Task PowCommandExecute()
         {
             left = Convert.ToDouble(CurrentValue);
-            result = Pow2(left.Value);
+            result = Pow(left.Value);
             newInput = true;
             CurrentValue = result.ToString();
 
