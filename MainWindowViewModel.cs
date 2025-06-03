@@ -161,10 +161,11 @@ namespace SharedCalculator
         }
 
         // Богдан Тишковець
-        double Pow(double value)
-        {
-            return Math.Pow(value, 2);
-        }
+        //double Pow(double value)
+        //{
+        //    double result = Math.Pow(value, 2);
+        //    return result;
+        //}
         
         // Богохвал Максим
         double Pow2(double value)
@@ -208,7 +209,7 @@ namespace SharedCalculator
         Task PowCommandExecute()
         {
             left = Convert.ToDouble(CurrentValue);
-            result = Pow(left.Value);
+            result = Math.Pow(left.Value, 2);
             newInput = true;
             CurrentValue = result.ToString();
 
