@@ -122,67 +122,45 @@ namespace SharedCalculator
             return Task.CompletedTask;
         }
 
-        // Олексій
-        
+        // Юрій Окропірідзе
         double Multiply(double value1, double value2)
         {
-            double result = value1 * value2;
-            return result;
+            return 0;
         }
 
-        // Роман Борiдько
-        double Multiply2(double value1, double value2)
-        {
-            double result = value1 * value2;
-            return result;
-        }
-
-        // Денис Кочубейник
+        // Коросько Олександр
         double Divide(double value1, double value2, out bool divideOnZero)
         {
-            if(value2 == 0)
-            { 
-                divideOnZero = true;
-                return -1;
-            }
-            else
-            {
-                divideOnZero = false;
-                return value1 / value2;
-            }
-        }
-
-        // Антон Лапоногов
-        double Subtraction(double value1, double value2)
-        {
-            return value1 - value2;
-        }
-
-        // Антон Караванський
-        double Add(double value1, double value2)
-        {
-            return value1 + value2;
-        }
-
-        // Тарас Соловей
-        double? GetPercent(double value1, double value2)
-        {
-            return (value1 * value2)/100;
-        }
-
-        // Богдан Тишковець
-        double Pow(double value)
-        {
-            throw new NotImplementedException();
+            divideOnZero = true;
+            return 0;
         }
         
-        // Богохвал Максим
-        double Pow2(double value)
+        // Олександр Гурба
+        double Subtraction(double value1, double value2)
         {
-            return Math.Pow(value, 2);
+            return 0;
         }
 
-        // Цибрій Андрій Sqrt
+        // Олена Мельник
+        double Add(double value1, double value2)
+        {
+            return 0;
+        }
+
+        // Дарина Шевченко отримання відсотків
+        //                        12              2
+        double? GetPercent(double value1, double value2)
+        {
+            // 12 * 2% = 0.02
+            return 0;
+        }
+
+        // Володимир Гурко возведення в квадрат
+        double Pow(double value)
+        {
+            return 0;
+        }
+       
 
         Task BackspaceCommandExecute()
         {
