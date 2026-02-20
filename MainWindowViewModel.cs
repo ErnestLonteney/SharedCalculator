@@ -131,16 +131,11 @@ namespace SharedCalculator
         // Коросько Олександр
         double Divide(double value1, double value2, out bool divideOnZero)
         {
-            if (value2 == 0)
-            {
-                divideOnZero = true;
+            divideOnZero = value2 == 0;
+            if (value2 == 0)                            
                 return 0;
-            }
-            else
-            {
-                divideOnZero = false;
-                return value1 / value2;
-            }
+            return value1 / value2;
+            
         }
         
         // Олександр Гурба
