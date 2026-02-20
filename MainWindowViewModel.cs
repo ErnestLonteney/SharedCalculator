@@ -141,7 +141,7 @@ namespace SharedCalculator
         // Олександр Гурба
         double Subtraction(double value1, double value2)
         {
-            return 0;
+            return value1 - value2;
         }
 
         // Олена Мельник
