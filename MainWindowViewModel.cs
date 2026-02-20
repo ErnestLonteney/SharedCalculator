@@ -147,7 +147,7 @@ namespace SharedCalculator
         // Олена Мельник
         double Add(double value1, double value2)
         {
-            return 0;
+            return value1 + value2;
         }
 
         // Дарина Шевченко отримання відсотків
