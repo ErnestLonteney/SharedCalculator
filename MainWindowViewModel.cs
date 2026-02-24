@@ -125,7 +125,7 @@ namespace SharedCalculator
         // Юрій Окропірідзе
         double Multiply(double value1, double value2)
         {
-            return 0;
+            return  value1 * value2;
         }
 
         // Коросько Олександр
